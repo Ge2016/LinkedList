@@ -1,0 +1,383 @@
+import java.util.Iterator;
+/** 
+ * Programming Assignment 4 - 10.22.19
+ * This class holds a collection of phone items. 
+ * @author 
+ * 	Ge xiong
+ **/
+ 
+public class PhoneLinkedBag implements Iterable<Phone>{
+	private PhoneNode head;
+	private int manyItems;
+	
+	public PhoneLinkedBag() {
+		this.head = null;
+		this.manyItems = 0;
+	}
+	public PhoneLinkedBag(PhoneNode head, int manyItems) {
+		this.head = head;
+		this.manyItems = manyItems;
+	}
+	/**
+	 *  This method returns the cost of the list.
+	 *  @param - none
+	 *  @return
+	 *   integer value of the cost
+	 */
+	public int size() {
+		return manyItems;
+	}
+	/**
+	 *  Displays the contents of the collection. 
+	 *  @param - none
+	 */
+	public void display() {
+		PhoneNode current = head;  
+        if(head == null) {  
+            System.out.println("List is empty");  
+            return;  
+        }  
+        while(current != null) {    
+            System.out.println(current.getData() + " ");  
+            current = current.getLink();  
+        }  
+        System.out.println();  
+	}
+	/**
+	 *  This method adds an item to the collection.
+	 *  @param - element
+	 *   Phone item to be added
+	 */
+	public void add(Phone element){
+		this.head = new PhoneNode(element, head); 
+		this.manyItems++;
+	}
+	/**
+	 *  Adds an element at a specific index in the collection.
+	 *  @param index, element
+	 *   element: Phone item to be added
+	 *   index: desired index to place the element
+	 */
+	public void add(int index, Phone element) {
+		PhoneNode nextNode = null;
+		PhoneNode preNode = head;
+		PhoneNode currentNode = preNode;
+		PhoneNode newNode = new PhoneNode(element, null);
+		
+		int count = 1;
+		while(count < index && count < size())
+			preNode = preNode.getLink();
+			count++;
+		if (index >= 1)
+			currentNode = preNode.getLink();
+		else 
+			currentNode = head;
+		if (index < size() - 1)
+			nextNode = currentNode.getLink();
+		if (index >= 1)
+			preNode.setLink(newNode);
+			newNode.setLink(nextNode);
+		if (index == 0)
+			head = newNode;
+		this.manyItems++;
+	}
+	/**
+	 *  Adding an element to be the last element in the linked list.
+	 *  @param element
+	 *   inserts the element to be added to the end of the list 
+	 */
+	public void addLast(Phone element) {
+		PhoneNode cursor = head;
+		Phone tailData = cursor.getData();
+		PhoneNode tail = new PhoneNode(tailData, null);
+		PhoneNode p1 = new PhoneNode();
+		
+		if (p1.getLink() != null) { 
+				cursor = cursor.getLink();
+				tailData = cursor.getData(); 
+		}	
+		else
+			tail.addNodeAfter(element);
+		this.manyItems++;
+	}
+	/**
+	 *  This method removes one occurrence from the target from the list if any.
+	 *  @param target
+	 *   Inputs a Phone object to remove
+	 *  @return
+	 *   The method returns true if an item is removed and false otherwise.
+	 */
+	public boolean remove(Phone target){
+		PhoneNode targetNode = PhoneNode.listSearch(this.head, target); 
+		if (targetNode == null) 
+			return false; 
+		else{ 
+			Phone headData = this.head.getData(); 
+			targetNode.setData(headData); manyItems--; 
+			this.head = this.head.getLink(); 
+			return true; 
+		}
+	}
+	/**
+	 *  This method removes the element that is located at position index in the linked list.
+	 *  @param index
+	 *   removes the location of the desired index
+	 *  @return
+	 *   returns true if an item is removed and false if no element is removed because index is negative or beyond the list length
+	 */
+	public boolean remove(int index) { 
+		PhoneNode p1 = new PhoneNode();
+		if (index == 0) 
+			return false; 
+		else{ 
+			Phone headData = this.head.getData(); 
+			p1.setData(headData); 
+			manyItems--; 
+			this.head = this.head.getLink(); 
+			return true;
+		}
+	}
+	/**
+	 *  Removes the last node in the linked list.
+	 *  @param - none
+	 */
+	public void removeLast() {
+		PhoneNode tail = null;
+		PhoneNode current = head; 
+		if(head != null) {
+			while(current!= tail) {  
+				current = current.getLink(); 
+             }  
+			manyItems--;
+         }  
+         else  
+             head = tail = null;  
+	}
+	/**
+	 *  This method counts and returns how many element in the collection falls in the range between start and end inclusive.
+	 *  @param start, end 
+	 *   starting and ending range
+	 *  @return
+	 *   return total that lies within the range
+	 */
+	public int countRange(Phone start, Phone end) {
+		PhoneNode cursor = head;
+		PhoneNode next = cursor.getLink();
+		int count = 0;
+		
+		if((cursor.getData().compareTo(start) > 1) 
+				&& (cursor.getData().compareTo(start) <= 1)) {
+			cursor = next.getLink();
+			
+			count++;
+		}
+		return count;
+	}
+	/**
+	 *  Returns the element of the node located at position index in the list or null if index is past the end of the list. 
+	 *  @param index
+	 *   inputs a desired index to grab
+	 *  @return
+	 *   returns a Phone object
+	 */
+	public Phone grab(int index){
+		PhoneNode p1 = new PhoneNode();
+		Phone output = null;
+		if (index < this.manyItems)
+			output = p1.getData();
+		return output;
+	}
+	/**
+	 *  Returns the index of the node that contains target assuming that the head node is at index 1.
+	 *  @param target
+	 *   finds the Phone object in the list 
+	 *  @return
+	 *   returns the index of the node that contains target 
+	 */
+	public int indexOf(Phone target) {
+		int index = 0;
+	    PhoneNode current = head;
+	    while (current != null) {
+	        if (current.equals(target)) {
+	            return index;
+	        }
+	        index++;
+	        current = current.getLink();
+	    }
+	    if(index == size() && target == null)
+	        return -1;
+	    else
+	        return index;		
+	}
+	/**
+	 *  Changes the element at position index with the input element.
+	 *  @param index, element
+	 *   picks an index of desired and changes the content with a new Phone object
+	 */
+	public void set(int index, Phone element) {
+		PhoneNode nextNode = null;
+		PhoneNode preNode = head;
+		PhoneNode currentNode = preNode;
+		PhoneNode newNode = new PhoneNode(element, null);
+		
+		int count = 1;
+		while(count < index && count < size())
+			preNode = preNode.getLink();
+			count++;
+		if (index >= 1)
+			currentNode = preNode.getLink();
+		else 
+			currentNode = head;
+		if (index < size() - 1)
+			nextNode = currentNode.getLink();
+		if (index >= 1)
+			preNode.setLink(newNode);
+			newNode.setLink(nextNode);
+		if (index == 0)
+			head = newNode;
+	}
+	/**
+	 *  The method searches the collection for an element that is equal to oldThing. 
+	 *  If found, the method replaces oldThing with newThing while maintaining the linked list order.
+	 *  @param oldThing, newThing
+	 *   finds and replace old Phone object with new Phone object
+	 *  @return
+	 *    returns true or false based on whether a replacement took place or not 
+	 */
+	public boolean replace(Phone oldThing, Phone newThing){
+		PhoneNode cursor = head;
+		
+		boolean output = false;
+		while(cursor != null)
+			if (oldThing.equals(cursor.getData())) {
+				oldThing = newThing;
+				output = true;
+			}
+			else
+				cursor = cursor.getLink();
+		return output;
+	}
+	/**
+	 *  Returns the sum of all the integer values of all things in the list.
+	 *  @param - none
+	 *  @return
+	 *   returns an integer of the total 
+	 */
+	public int totalValue() {
+		PhoneNode cursor = head;
+		Phone current = cursor.getData();
+		
+		int sum = 0;
+		while (cursor.getLink() != null) {
+			sum += (int) current.getCost();
+			cursor = cursor.getLink();
+		}
+		return sum;
+	}
+	/**
+	 *  This method takes one Thing as input and returns an output a linked list that includes all elements that are less than or equal to the input element.
+	 *  @param element
+	 *   picks a Phone object to compare 
+	 *  @return
+	 *   returns a PhoneNode object
+	 */
+	public PhoneNode lessThan(Phone element) {
+		PhoneNode cursor = head;
+		Phone lessValues = cursor.getData();
+		PhoneNode node = new PhoneNode(lessValues, cursor);
+		
+		while (cursor.getLink() != null) {
+			if(cursor.getData().compareTo(element) < 1) {  
+				cursor = cursor.getLink();
+				add(lessValues);
+			}
+			else
+				return null;
+		} 
+		return node;
+	}
+	/**
+	 *  This method takes one Thing as input and returns an output a linked list that includes all elements that are greater than the input element.
+	 *  @param element
+	 *   picks a Phone object to compare 
+	 *  @return
+	 *   returns a PhoneNode object
+	 */
+	public PhoneNode greaterThan(Phone element) {
+		PhoneNode cursor = head;
+		Phone greaterValues = cursor.getData();
+		PhoneNode node = new PhoneNode(greaterValues, cursor);
+		
+		while (cursor.getLink() != null) {
+			if(cursor.getData().compareTo(element) > 1) {  
+				cursor = cursor.getLink();
+				add(greaterValues);
+			}
+			else
+				return null;
+		} 
+		return node;
+	}
+	/**
+	 *  This method returns the maximum Thing in the linked list where things are ordered based on the compareTo method. 
+	 *  @param - none
+	 *  @return
+	 *   Phone object of the max Thing
+	 */
+	public Phone getMax() {
+		PhoneNode cursor = head;
+        Phone max = cursor.getData();
+  
+        if(head == null) 
+            System.out.println("List is empty");  
+        else 
+        	if(cursor.getData().compareTo(max) >= 0) 
+        		cursor = cursor.getLink();
+        		max = cursor.getData();  
+        		
+        return max;
+	}
+	/**
+	 *  This method returns the minimum Thing in the linked list where things are ordered based on the compareTo method. 
+	 *  @param - none
+	 *  @return
+	 *   Phone object of the min Thing
+	 */
+	public Phone getMin() {
+		PhoneNode cursor = head;
+        Phone min = cursor.getData();
+  
+        if(head == null)  
+            System.out.println("List is empty");  
+        else 
+        	if(cursor.getData().compareTo(min) <= 0) 
+        		cursor = cursor.getLink();
+        		min = cursor.getData();  
+        		
+        return min;
+	}
+	@Override
+	public Iterator<Phone> iterator() {
+		return new PhoneLinkedBagIterator();
+	}
+	/**
+	 * Nested class of Iterator. 
+	 * Iterate over all items in the collection. 
+	 */
+	class PhoneLinkedBagIterator implements Iterator<Phone>{
+		PhoneNode head;
+		private PhoneNode current = head; 
+		@Override 
+		public boolean hasNext() { 
+			if (this.current == null) 
+				return false; 
+			return true;
+		}
+		@Override 
+		public Phone next() { 
+			Phone data = this.current.getData(); 
+			this.current = this.current.getLink(); 
+			return data; 
+		}
+	}
+}
