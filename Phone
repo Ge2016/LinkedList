@@ -1,0 +1,78 @@
+/** 
+ * Programming Assignment 4 - 10.22.19
+ * @author 
+ * 	Ge xiong
+ **/
+public class Phone implements Comparable<Phone>{
+	private double cost;
+	private String name;
+	private int ram;
+	
+	public Phone(String n, double s, int r) {
+		name = n;
+		cost = s;
+		ram = r;
+	}
+	/**
+	 * Returns a string representation of the class.
+	 * @param - none
+	 * @return
+	 *  returns a String of the instance variables
+	 */
+	
+	public String toString() {
+		String str = String.format("\t%-15s\t\t%-15s\t%-15s\n", name, "$" + cost, ram + "GB");
+		return str;
+	}
+	public double getCost() {
+		return cost;
+	}
+	public void setCost(double cost) {
+		this.cost = cost;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int getRam() {
+		return ram;
+	}
+	public void setRam(int ram) {
+		this.ram = ram;
+	}
+	/**
+	 *  This method test the equality of two things.
+	 *  @param phone2
+	 *   creates an object to be compared 
+	 *  @return
+	 *   True - if the objects are equal to another. Taking 3 conditions of all instance vars must to equal
+	 */
+	public boolean equals(Phone phone2) {
+		 boolean output = false;   
+		   if (phone2 instanceof Phone) {    
+			   if (phone2.name.equalsIgnoreCase(this.name) &&
+					   (phone2.cost == this.cost) && (phone2.ram == this.ram)){    
+				   output = true;   
+			   }
+		   }
+			else
+				output = false;   
+		   return output;
+	}
+	/**
+	 *  Compares and object with the Phone class to see which Phone has the larger RAM cost.
+	 *  @param phone2
+	 *   creates an object to be compared 
+	 *  @return
+	 */
+	public int compareTo(Phone phone2) {
+		int value = -1;
+		if(this.cost < phone2.cost)
+			value = -1;
+		else if(this.cost > phone2.cost)
+			value = 1;
+		return value;
+	}
+}
