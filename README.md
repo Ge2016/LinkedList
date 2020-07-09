@@ -1,3 +1,4 @@
+JAVA:
 # LinkedList
 Assignment 4: Managing a Linked List of Things 
 In this assignment, you are asked to implement a bag collection using a linked list and, in order to focus on the linked list implementation details, we will implement the collection to store only one type of Thing of your choice (i.e., not generic). 
