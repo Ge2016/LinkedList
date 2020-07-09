@@ -1,0 +1,78 @@
+import java.util.Iterator;
+
+/** 
+ * Programming Assignment 4 - 10.22.19
+ * @author 
+ * 	Ge xiong
+ **/
+public class PhoneLinkedBagDriver {
+	public static void main(String[] args) {
+		Phone p1 = new Phone("Google Pixel 4", 800, 6);
+		Phone p2 = new Phone("Samsung s10", 900, 8);
+		Phone p3 = new Phone("ZTE Axon 7", 400, 4);
+		Phone p4 = new Phone("Motorola Moto Z", 500, 4);
+		Phone p5 = new Phone("Samsung Note9", 1000, 6);
+		Phone p6 = new Phone("Huawei Nova 3i", 221.91, 4);
+		Phone p7 = new Phone("Sony Xperia Z5", 1177.56, 3);
+		Phone p8 = new Phone("Motorola G3", 288.87, 1);
+		Phone p9 = new Phone("Oppo F1", 355.53, 3);
+		Phone p10 = new Phone("Lenovo A6000", 155.53, 2);
+		
+		System.out.println("PhoneNode Testing.......");
+		System.out.println("Before:");
+		PhoneNode node = new PhoneNode(p1, null);
+		node.addNodeAfter(p2);
+		node.addNodeAfter(p3);
+		node.addNodeAfter(p4);
+		System.out.println(String.format("\t%-15s\t\t%-15s\t%-15s\n-----------------------------------------------------------\n", "Phone", "Price", "RAM"));
+		PhoneNode.display(node);
+		
+		System.out.println("After:");
+		node.removeNodeAfter();
+		System.out.println(String.format("\t%-15s\t\t%-15s\t%-15s\n-----------------------------------------------------------\n", "Phone", "Price", "RAM"));
+		PhoneNode.display(node);
+		System.out.println("List position: " + PhoneNode.listPosition(node, 1));
+		System.out.println("List length: " + PhoneNode.listLength(node));
+		System.out.println("List search: " + PhoneNode.listSearch(node, p2));
+		
+		
+		System.out.println("\nPhoneLinkedBag Testing.......");
+		PhoneLinkedBag bag = new PhoneLinkedBag();
+		Iterator<Phone> itr = bag.iterator();
+		while (itr.hasNext()) 
+		System.out.println(itr.next());
+				
+		bag.add(p5);
+		bag.add(p6);
+		bag.add(p7);
+		bag.add(p8);
+		bag.add(p9);
+		bag.add(p10);
+		bag.add(1, new Phone("iPhone X", 1000, 3));
+		bag.addLast(p4);
+		System.out.println("Before:");
+		System.out.println(String.format("\t%-15s\t\t%-15s\t%-15s\n-----------------------------------------------------------\n", "Phone", "Price", "RAM"));
+		bag.display();
+		System.out.println("Total size: " + bag.size());
+
+		System.out.println("removed? " + bag.remove(p7));
+		System.out.println("removed? " + bag.remove(1));
+		System.out.println("After:");
+		bag.removeLast();
+		System.out.println(String.format("\t%-15s\t\t%-15s\t%-15s\n-----------------------------------------------------------\n", "Phone", "Price", "RAM"));
+		bag.display();
+		System.out.println("Total size: " + bag.size());
+		System.out.println("Total in range: " + bag.countRange(p4, p7));
+		System.out.println("Grabing: " + bag.grab(2));
+		System.out.println("Getting index: " + bag.indexOf(p6));	
+		
+		System.out.println("Replacing:");
+		bag.set(1, new Phone("HTC One A9", 400, 3));
+		System.out.println("replaced? " + bag.replace(p9, new Phone("iPhone 11 Pro", 1000, 4)));
+		System.out.println("Total price: " + bag.totalValue());
+		System.out.println("Less than values: " + bag.lessThan(p5));
+		System.out.println("Greater than values: " + bag.greaterThan(p5));
+		System.out.println("Max: " + bag.getMax());
+		System.out.println("Min: " + bag.getMin());
+	}
+}
