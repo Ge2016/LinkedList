@@ -1,0 +1,115 @@
+/** 
+ * Programming Assignment 4 - 10.22.19
+ * @author 
+ * 	Ge xiong
+ **/
+public class PhoneNode {
+	private Phone data;
+	private PhoneNode link;
+	
+	public PhoneNode() {
+		this.link = null;
+	}
+	public PhoneNode(Phone data, PhoneNode link) {
+		this.data = data;
+		this.link = link;
+	}
+
+	public Phone getData() {
+		return data;
+	}
+	public void setData(Phone data) {
+		this.data = data;
+	}
+	public PhoneNode getLink() {
+		return link;
+	}
+	public void setLink(PhoneNode link) {
+		this.link = link;
+	}
+	/**
+	 *  Modification method to add a new node after this node. 
+	 *  @param element
+	 *   the data to place in the new node
+	 */
+	public void addNodeAfter(Phone element) {
+		link = new PhoneNode(element, link);
+	}
+	/**
+	 *  Modification method to remove the node after this node.  
+	 *  @param - none
+	 */
+	public void removeNodeAfter() {
+		this.link = link.link;
+	}
+	/**
+	 *  Displays the nodes present in the list.
+	 *  @param - none
+	 */
+	public static void display(PhoneNode head) {
+		PhoneNode cursor = head;
+		while (cursor != null){ 
+			System.out.println(cursor.data); 
+			cursor = cursor.getLink(); 
+		}
+	}
+	/**
+	 *  Finding a node at a specified position in a linked list.
+	 *  @param head
+     *   the head reference for a linked list
+     *  @param position
+     *   a node number
+	 *  @return 
+	 *   The return value is a reference to the node at the specified position in the list.
+     *  @exception IllegalArgumentException
+     *   Indicates that position is zero.
+	 */
+	public static PhoneNode listPosition(PhoneNode head, int position){
+		PhoneNode cursor;
+	    int i;
+	    if (position == 0)
+	    	throw new IllegalArgumentException("position is zero");
+	    cursor = head;
+	    for (i = 1; (i < position) && (cursor != null); i++)
+	    	cursor = cursor.link;
+	    return cursor;
+	}
+	/**
+	 * Compute the number of nodes in a linked list.
+     * @param head
+     *   the head reference for a linked list
+     * @return
+     *   the number of nodes in the list with the given head
+	 */
+	public static int listLength(PhoneNode head){
+		PhoneNode cursor;
+	    int answer;
+	    answer = 0;
+	    for (cursor = head; cursor != null; cursor = cursor.link)
+	    	answer++;  
+	    return answer;
+	}
+	/**
+	 * Search for a particular piece of data in a linked list.
+     * @param head
+     *   the head reference for a linked list
+     * @param target
+     *   a target to search for
+     * @return
+     *   returns a reference to the first node that contains the specified target.
+	 */
+	public static PhoneNode listSearch(PhoneNode head, Phone target){
+		PhoneNode cursor;     
+	    if (target == null){
+	    	for (cursor = head; cursor != null; cursor = cursor.link)
+	    		if (cursor.data == null)
+	    			return cursor;
+	    }
+	    else{
+	    	for (cursor = head; cursor != null; cursor = cursor.link)
+	            if (target.equals(cursor.data))
+	                return cursor;
+	    }   
+	    return null;
+	}
+}
