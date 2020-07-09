@@ -1,5 +1,6 @@
 /** 
  * Programming Assignment 4 - 10.22.19
+ * Every phone element holds its data and a link to the next node.
  * @author 
  * 	Ge xiong
  **/
